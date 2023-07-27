@@ -145,7 +145,90 @@ public class PolyService {
 		}
 		
 		return result;
+		
 	}
 	
+	public void ex3() {
+		
+		// ******** 다형성 중 다운캐스팅 ********
+		
+		// 다운캐스팅이란?
+		// 부모타입 참조변수가 자식 객체를 참조하는 기술로
+		// 업캐스팅 상태에서만 진행할 수 있다.
+		// 부모타입을 자식타입으로 "강제 형변환"해서
+		// 자식 객체의 본래 필드, 메소드를 사용 가능하게 한다.
+		
+		Car c1 = new Tesla("전기모터", "전기", 4, 50000);
+		
+		System.out.println( ((Tesla)c1).getBatteryCapacity() );
+		// 주의 ! "." 연산자가
+		// (Tesla) 형변환 연산자보다 우선순위가 높음 -> 한번 더 묶어줘야 한다.
+		
+		Tesla t1 = (Tesla)c1;
+		
+		System.out.println( t1.getBatteryCapacity() );
+		
+	}
+	
+	public void ex4() {
+		// 다운캐스팅 주의사항!!
+		
+		Car c1 = new Tesla();
+		
+		//Spark s1 = (Spark)c1;
+		
+		// -> c1이 참조하는 객체는 Tesla인데
+		// Spark 참조변수로 Tesla를 참조하려고 하면 문제가 있음
+		// java.lang.ClassCastException : 형변환 예외
+		
+		// 해결방법 : instanceof 와 같이 사용해야 한다!
+		
+		if(c1 instanceof Spark) {
+			Spark s1 = (Spark)c1; // 다운캐스팅
+			System.out.println("성공");
+		} else {
+			System.out.println("실패 (Spark 타입이 아님)");
+		}
+				
+	}
+	
+	public void ex5() {
+		
+		// 바인딩 (Binding)
+		// 실제 실행할 메소드 코드와 호출하는 코드를 연결 시키는 것
+		
+		Car c1 = new Car("경유엔진", "경유", 8);
+		
+		System.out.println( c1.getEngine() );
+		// Car 객체에 있는 getEngine() 메소드를 호출 == 바인딩
+		// String edu.kh.poly.ex1.model.vo.Car.getEngine()
+		
+		// 프로그램 "실행 전"
+		// - 컴파일러는 getEngine() 메소드가 Car에 있는걸로 인식해서
+		// c1.getEngine() 호출코드와
+		// String edu.kh.poly.ex1.model.vo.Car.getEngine() 메소드 코드를 연결
+		// -> 정적 바인딩
+		
+		System.out.println( c1.toString() );
+		// String edu.kh.poly.ex1.model.vo.Car.toString()
+		// Car 참조변수 c1을 이용해서
+		// Car 객체에 있는 오버라이딩된 toString() 메소드를 호출
+		
+		// ** 다형성 적용시 바인딩 ** 
+		Car c2 = new Spark("경차엔진", "휘발유", 4, 0.5);
+		// 업캐스팅 적용 -> 부모 부분만 참조 가능한 상태
+		
+		System.out.println( c2.toString() );
+		// String edu.kh.poly.ex1.model.vo.Car.toString()
+		
+		// 참조변수 c2가 Car타입이므로
+		// toString()도 Car의 toString()을 호출 - 정적 바인딩
+		
+		// 하지만 실행해보면 자식(Spark)의 toString()이 호출되는 것을 확인
+		// -> 컴파일 시에는 부모(Car)와 바인딩 == 정적바인딩
+		// -> "실행 시" 에는 자식(Spark)의 오버라이딩된 메소드와 바인딩 == 동적바인딩
+		
+
+	}
 	
 }
