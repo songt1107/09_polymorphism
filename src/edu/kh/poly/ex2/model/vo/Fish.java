@@ -31,6 +31,5 @@ public class Fish extends Animal {
 		return "Fish : " + super.toString();
 	}
 	
-	
 
 }
